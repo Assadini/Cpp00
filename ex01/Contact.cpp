@@ -1,12 +1,9 @@
 #include "Contact.hpp"
 #include <iostream>
-#include <iomanip>
 
-// Default Constructor
 Contact::Contact()
     : firstname(""), lastname(""), nickname(""), phonenumber(""), darkestsecret("") {}
 
-// Setters
 void Contact::setContact(const std::string &firstName, const std::string &lastName, const std::string &nickname, const std::string &phoneNumber, const std::string &darkestSecret) {
     this->firstname = firstName;
     this->lastname = lastName;
@@ -15,7 +12,6 @@ void Contact::setContact(const std::string &firstName, const std::string &lastNa
     this->darkestsecret = darkestSecret;
 }
 
-// Getters
 std::string Contact::getFirstName() const {
     return this->firstname;
 }
@@ -36,7 +32,6 @@ std::string Contact::getDarkestSecret() const {
     return this->darkestsecret;
 }
 
-// Display full contact details
 void Contact::displayContact() const {
     std::cout << "First name: " << firstname << std::endl
               << "Last name: " << lastname << std::endl
@@ -45,13 +40,13 @@ void Contact::displayContact() const {
               << "Darkest secret: " << darkestsecret << std::endl;
 }
 
-// Format a column for display
 std::string Contact::formatColumn(const std::string &str) const {
     if (str.length() > 10)
         return str.substr(0, 9) + ".";
     else
         return std::string(10 - str.length(), ' ') + str;
 }
+
 std::string intToString(int value) {
     if (value == 0)
         return "0";
@@ -71,7 +66,7 @@ std::string intToString(int value) {
 
     return result;
 }
-// Display contact header in a table format
+
 void Contact::displayHeader(int index) const {
     std::cout << "|" << formatColumn(intToString(index))
               << "|" << formatColumn(firstname)

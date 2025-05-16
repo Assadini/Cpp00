@@ -1,13 +1,10 @@
-# Compiler and flags
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Files
-SRCS = Contact.cpp PhoneBook.cpp main.cpp
+SRCS = main.cpp Contact.cpp PhoneBook.cpp
 OBJS = $(SRCS:.cpp=.o)
 TARGET = phonebook
 
-# Rules
 all: $(TARGET)
 
 $(TARGET): $(OBJS)

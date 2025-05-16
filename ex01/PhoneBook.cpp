@@ -3,31 +3,30 @@
 #include <iomanip>
 #include <string>
 
-// Constructor
 PhoneBook::PhoneBook() : currentSize(0), Size(0) {}
 
-// Increment the size of the phonebook
-void PhoneBook::incSize() {
-    if (Size < 4) {
-        Size++;
+void PhoneBook::incSize(){
+    if(currentSize<7)
+    currentSize++;
+    else{
+        currentSize=0;
     }
 }
 
-// Get the current size of the phonebook
 int PhoneBook::getCurrentSize() const{
     return currentSize;
 }
 
-// Add a new contact to the phonebook
 void PhoneBook::addContact(std::string firstName,std::string lastName,std::string nickname,std::string phoneNumber,std::string darkestSecret) {
 
     list[currentSize].setContact(firstName, lastName, nickname, phoneNumber, darkestSecret);
-
-    currentSize = (currentSize + 1) % 4; // Overwrite the oldest contact if full
     incSize();
+    if(Size<8){
+        Size++;
+    }
 }
 
-// Display the phonebook in a tabular format
+
 void PhoneBook::displayPhoneBook() const {
     std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
     std::cout << "--------------------------------------------" << std::endl;
@@ -37,23 +36,37 @@ void PhoneBook::displayPhoneBook() const {
     std::cout << "--------------------------------------------" << std::endl;
 }
 
-// Search for a contact by index
-bool PhoneBook::search() const {
+void PhoneBook::search() const{
+    std::string indexInput;
     if (Size == 0) {
-        std::cout << "PhoneBook is empty. Add some contacts first!" << std::endl;
-        return false;
+        std::cout << "PhoneBook is empty. Please add a contact first.\n";
+        return;
+    }
+    displayPhoneBook();
+
+    std::cout << "Enter the index of the contact to display: ";
+    std::getline(std::cin, indexInput);
+
+    if (indexInput.empty()) {
+        std::cout << "Invalid index. Returning to menu.\n";
+        return;
     }
 
-    int index;
-    std::cout << "Enter the index of the contact to display: ";
-    std::cin >> index;
+    for (size_t i = 0; i < indexInput.length(); i++) {
+        if (!std::isdigit(indexInput[i])) {
+            std::cout << "Invalid index. Returning to menu.\n";
+            return;
+        }
+    }
 
-    if (std::cin.fail() || index < 1 || index > Size) {
-        std::cin.clear();
-        std::cout << "Invalid index. Please try again." << std::endl;
-        return false;
+    int index = 0;
+    for (size_t i = 0; i < indexInput.length(); i++) {
+        index = index * 10 + (indexInput[i] - '0');
+    }
+    if (index <= 0 || index > Size) {
+        std::cout << "Index out of range. Returning to menu.\n";
+        return;
     }
 
     list[index - 1].displayContact();
-    return true;
 }
